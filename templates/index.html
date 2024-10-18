@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>South Indian Food Q&A</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>South Indian Food</h1>
+        <form id="questionForm">
+            <input type="text" name="question" placeholder="Ask your here...." required>
+            <button type="submit">Submit</button>
+        </form>
+        <div id="answer"></div>
+    </div>
+    <script>
+        document.getElementById('questionForm').addEventListener('submit', async function(event) {
+            event.preventDefault();
+            const formData = new FormData(this);
+            const response = await fetch('/get_answer', {
+                method: 'POST',
+                body: formData
+            });
+            const answer = await response.text();
+            document.getElementById('answer').innerText = answer;
+        });
+    </script>
+</body>
+</html>
